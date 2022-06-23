@@ -170,15 +170,10 @@ namespace sdi {
     template<typename Type>
     struct dependencies_of final {
     private:
-#pragma clang diagnostic push
-#pragma ide diagnostic ignored "NotImplementedFunctions"
-
       static tmp::type_list<> check(...) noexcept;
 
       template<typename T = Type>
       static auto check(int, typename T::dependencies = {}) noexcept -> typename T::dependencies;
-
-#pragma clang diagnostic pop
 
     public:
       using type = decltype(check(42));
@@ -293,8 +288,7 @@ namespace sdi {
     auto emplace(Args&& ...)
     -> std::enable_if_t<!std::is_constructible<Type, Args...>::value, container&>
     {
-      using std::string_literals::operator ""s;
-      throw resolution_error(typeid(Type).name() + " could not be automatically constructed."s);
+      throw resolution_error(typeid(Type).name() + std::string{" could not be automatically constructed."});
     }
 
     template<typename Type>
