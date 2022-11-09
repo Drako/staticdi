@@ -173,10 +173,10 @@ namespace sdi {
       static tmp::type_list<> check(...) noexcept;
 
       template<typename T = Type>
-      static auto check(int, typename T::dependencies = {}) noexcept -> typename T::dependencies;
+      static auto check(int) noexcept -> typename T::dependencies;
 
     public:
-      using type = decltype(check(42));
+      using type = decltype(check(24));
       static_assert(tmp::is_type_list_v<type>, "Dependencies must be a type_list");
     };
 
